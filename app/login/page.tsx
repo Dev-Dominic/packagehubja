@@ -24,12 +24,15 @@ export default function LoginPage() {
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 1000))
 
-    // Allow anyone to login with the default credentials
+    // Route based on email address
     if (email === "test@email.com" && password === "password") {
-      // Navigate to admin dashboard
+      // Admin login - navigate to admin dashboard
       router.push("/admin")
+    } else if (email === "merchant@email.com" && password === "password") {
+      // Merchant login - navigate to merchant dashboard
+      router.push("/merchant/dashboard")
     } else {
-      setError("Invalid credentials. Please use test@email.com / password")
+      setError("Invalid credentials. Please use test@email.com / password for admin or merchant@email.com / password for merchant")
     }
 
     setIsLoading(false)
@@ -47,7 +50,7 @@ export default function LoginPage() {
         <Card className="border-0 shadow-xl">
           <CardHeader className="text-center pb-6">
             <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
-            <CardDescription>Sign in to your PackageHub account</CardDescription>
+            <CardDescription>Sign in to your PackageHub admin or merchant account</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -123,8 +126,12 @@ export default function LoginPage() {
             {/* Demo Credentials Info */}
             <div className="p-3 bg-blue-50 border border-blue-200 rounded-md">
               <p className="text-sm text-blue-800 text-center">
-                <strong>Demo Login:</strong> Use test@email.com / password
+                <strong>Demo Logins:</strong>
               </p>
+              <div className="mt-2 space-y-1 text-xs">
+                <p><strong>Admin:</strong> test@email.com / password</p>
+                <p><strong>Merchant:</strong> merchant@email.com / password</p>
+              </div>
             </div>
           </CardContent>
         </Card>

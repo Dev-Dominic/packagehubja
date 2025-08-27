@@ -209,7 +209,7 @@ export default function MerchantDetailPage({ params }: { params: { id: string } 
             <Button variant="ghost" size="sm">
               <Settings className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" onClick={() => window.location.href = '/login'}>
               <LogOut className="h-5 w-5" />
             </Button>
           </div>

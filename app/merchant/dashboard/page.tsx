@@ -4,53 +4,40 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import {
-  Package,
+import { 
+  Package, 
+  DollarSign, 
+  TrendingUp, 
+  Settings, 
+  Bell, 
+  LogOut, 
+  Menu, 
+  BarChart3, 
+  PieChart, 
+  Activity, 
+  AlertTriangle, 
+  CheckCircle, 
+  Clock, 
+  Truck, 
   Users,
-  DollarSign,
-  TrendingUp,
-  Settings,
-  Bell,
-  LogOut,
-  Menu,
-  BarChart3,
-  PieChart,
-  Activity,
-  AlertTriangle,
-  CheckCircle,
-  Clock,
-  Truck,
+  Building2
 } from "lucide-react"
 import Link from "next/link"
 
-
-
+// Mock data for merchant metrics
 const mockMetrics = {
-  totalRevenue: 2450000,
-  totalCustomers: 487,
-  totalPackages: 125430,
+  totalRevenue: 125000,
+  totalPackages: 15420,
   activeShipments: 3420,
   deliveryRate: 98.5,
   customerSatisfaction: 4.8,
+  monthlyRevenue: 12500,
+  avgOrderValue: 100,
+  uniqueCustomers: 3420,
 }
 
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case "active":
-      return "bg-green-100 text-green-800"
-    case "pending":
-      return "bg-yellow-100 text-yellow-800"
-    case "inactive":
-      return "bg-gray-100 text-gray-800"
-    default:
-      return "bg-gray-100 text-gray-800"
-  }
-}
-
-export default function AdminDashboard() {
+export default function MerchantDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
@@ -63,13 +50,13 @@ export default function AdminDashboard() {
               <Menu className="h-5 w-5" />
             </Button>
             <div className="flex items-center gap-2">
-              <Package className="h-8 w-8 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">PackageHub Admin</span>
+              <Building2 className="h-8 w-8 text-blue-600" />
+              <span className="text-xl font-bold text-gray-900">TechCorp Solutions</span>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Badge variant="secondary" className="bg-red-100 text-red-800">
-              Admin
+            <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+              Merchant
             </Badge>
             <Button variant="ghost" size="sm">
               <Bell className="h-5 w-5" />
@@ -91,35 +78,35 @@ export default function AdminDashboard() {
         >
           <nav className="mt-16 lg:mt-0 p-4 space-y-2 h-full">
             <Link
-              href="/admin"
+              href="/merchant/dashboard"
               className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg"
             >
               <BarChart3 className="h-5 w-5" />
               Dashboard
             </Link>
             <Link
-              href="/admin/merchants"
-              className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg"
-            >
-              <Users className="h-5 w-5" />
-              Merchants
-            </Link>
-            <Link
-              href="/admin/packages"
+              href="/merchant/packages"
               className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg"
             >
               <Package className="h-5 w-5" />
-              All Packages
+              Packages
             </Link>
             <Link
-              href="/admin/analytics"
+              href="/merchant/customers"
+              className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg"
+            >
+              <Users className="h-5 w-5" />
+              Customers
+            </Link>
+            <Link
+              href="/merchant/analytics"
               className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg"
             >
               <PieChart className="h-5 w-5" />
               Analytics
             </Link>
             <Link
-              href="/admin/settings"
+              href="/merchant/settings"
               className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg"
             >
               <Settings className="h-5 w-5" />
@@ -132,8 +119,8 @@ export default function AdminDashboard() {
         <main className="flex-1 lg:ml-0 p-6 overflow-auto">
           {/* Welcome Section */}
           <div className="mb-8">
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
-            <p className="text-gray-600">Monitor and manage your PackageHub operations.</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Merchant Dashboard</h1>
+            <p className="text-gray-600">Monitor and manage your fulfillment operations.</p>
           </div>
 
           <Tabs defaultValue="overview" className="space-y-6">
@@ -159,16 +146,6 @@ export default function AdminDashboard() {
                 </Card>
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Total Customers</CardTitle>
-                    <Users className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{mockMetrics.totalCustomers}</div>
-                    <p className="text-xs text-muted-foreground">+12 new this week</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Total Packages</CardTitle>
                     <Package className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
@@ -187,13 +164,23 @@ export default function AdminDashboard() {
                     <p className="text-xs text-muted-foreground">Real-time tracking</p>
                   </CardContent>
                 </Card>
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Unique Customers</CardTitle>
+                    <Users className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{mockMetrics.uniqueCustomers.toLocaleString()}</div>
+                    <p className="text-xs text-muted-foreground">+12 new this week</p>
+                  </CardContent>
+                </Card>
               </div>
 
               {/* Performance Metrics */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>System Health</CardTitle>
+                    <CardTitle>Business Health</CardTitle>
                     <CardDescription>Key performance indicators</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -207,55 +194,55 @@ export default function AdminDashboard() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Activity className="h-4 w-4 text-blue-600" />
-                        <span className="text-sm">System Uptime</span>
-                      </div>
-                      <span className="font-semibold">99.9%</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <TrendingUp className="h-4 w-4 text-green-600" />
                         <span className="text-sm">Customer Satisfaction</span>
                       </div>
                       <span className="font-semibold">{mockMetrics.customerSatisfaction}/5.0</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <Clock className="h-4 w-4 text-yellow-600" />
-                        <span className="text-sm">Avg. Processing Time</span>
+                        <TrendingUp className="h-4 w-4 text-green-600" />
+                        <span className="text-sm">Monthly Revenue</span>
                       </div>
-                      <span className="font-semibold">2.3 hours</span>
+                      <span className="font-semibold">${mockMetrics.monthlyRevenue.toLocaleString()}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Clock className="h-4 w-4 text-yellow-600" />
+                        <span className="text-sm">Avg. Order Value</span>
+                      </div>
+                      <span className="font-semibold">${mockMetrics.avgOrderValue}</span>
                     </div>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Recent Alerts</CardTitle>
-                    <CardDescription>System notifications and issues</CardDescription>
+                    <CardTitle>Recent Activity</CardTitle>
+                    <CardDescription>Latest package updates and notifications</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex items-start gap-3">
-                      <AlertTriangle className="h-4 w-4 text-yellow-600 mt-1" />
+                      <CheckCircle className="h-4 w-4 text-green-600 mt-1" />
                       <div className="flex-1">
-                        <p className="text-sm font-medium">High volume detected</p>
-                        <p className="text-xs text-gray-600">Processing times may be delayed</p>
+                        <p className="text-sm font-medium">Package delivered successfully</p>
+                        <p className="text-xs text-gray-600">TRK123456789 delivered to Alice Johnson</p>
                         <p className="text-xs text-gray-500">2 hours ago</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <CheckCircle className="h-4 w-4 text-green-600 mt-1" />
+                      <Truck className="h-4 w-4 text-blue-600 mt-1" />
                       <div className="flex-1">
-                        <p className="text-sm font-medium">System maintenance completed</p>
-                        <p className="text-xs text-gray-600">All services restored</p>
-                        <p className="text-xs text-gray-500">6 hours ago</p>
+                        <p className="text-sm font-medium">New package in transit</p>
+                        <p className="text-xs text-gray-600">TRK123456790 shipped to Bob Smith</p>
+                        <p className="text-xs text-gray-500">4 hours ago</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <Activity className="h-4 w-4 text-blue-600 mt-1" />
+                      <Package className="h-4 w-4 text-yellow-600 mt-1" />
                       <div className="flex-1">
-                        <p className="text-sm font-medium">New integration available</p>
-                        <p className="text-xs text-gray-600">Shopify Plus connector ready</p>
-                        <p className="text-xs text-gray-500">1 day ago</p>
+                        <p className="text-sm font-medium">Package received for processing</p>
+                        <p className="text-xs text-gray-600">New order from Carol Davis</p>
+                        <p className="text-xs text-gray-500">6 hours ago</p>
                       </div>
                     </div>
                   </CardContent>
@@ -263,20 +250,18 @@ export default function AdminDashboard() {
               </div>
             </TabsContent>
 
-            
-
             {/* Packages Tab */}
             <TabsContent value="packages" className="space-y-6">
               <Card>
                 <CardHeader>
                   <CardTitle>Package Overview</CardTitle>
-                  <CardDescription>System-wide package tracking and management</CardDescription>
+                  <CardDescription>Quick summary of your package operations</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div className="text-center p-4 bg-blue-50 rounded-lg">
                       <Package className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                      <div className="text-2xl font-bold text-blue-600">12,543</div>
+                      <div className="text-2xl font-bold text-blue-600">15,420</div>
                       <div className="text-sm text-gray-600">Total Packages</div>
                     </div>
                     <div className="text-center p-4 bg-yellow-50 rounded-lg">
@@ -291,9 +276,15 @@ export default function AdminDashboard() {
                     </div>
                     <div className="text-center p-4 bg-green-50 rounded-lg">
                       <CheckCircle className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                      <div className="text-2xl font-bold text-green-600">7,888</div>
+                      <div className="text-2xl font-bold text-green-600">10,765</div>
                       <div className="text-sm text-gray-600">Delivered</div>
                     </div>
+                  </div>
+                  
+                  <div className="mt-6 text-center">
+                    <Button asChild>
+                      <Link href="/merchant/packages">View All Packages</Link>
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
@@ -301,7 +292,7 @@ export default function AdminDashboard() {
 
             {/* Analytics Tab */}
             <TabsContent value="analytics" className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid lg:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
                     <CardTitle>Revenue Trends</CardTitle>
@@ -334,4 +325,4 @@ export default function AdminDashboard() {
       </div>
     </div>
   )
-}
+} 
